@@ -9,8 +9,8 @@ import java.util.Scanner;
 import org.json.*;
 
 public class CallAPI {
-
-	public JSONObject getJSON(String inputURL) {
+	
+	public static JSONObject getJSON(String inputURL) {
 		String data = null;
 		try {
 			//converting the string into something recognized as a URL
@@ -29,10 +29,14 @@ public class CallAPI {
 		} catch (IOException E){
 			throw new RuntimeException("Invalid URL Format");
 		}
+		
+		//removing empty space at beginning of JSON that was tripping up the JSON conversion
+		int i = data.indexOf("{");
+		data = data.substring(i);
 		//If the program runs through the try-catch block without any issues, it makes it here. If it doesn't, well that's a problem with the code above.
 		//Either way I shouldn't have to worry about accidentally using null variables here; if they're null, it's because the above code didn't run, and that already would throw an exception
 		//and stop during runtime.
-		JSONObject convertedData = new JSONObject(data);
+		JSONObject convertedData = new JSONObject(data.trim());
 		return convertedData;
 	}
 }
