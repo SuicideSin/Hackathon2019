@@ -29,7 +29,7 @@
  
  * Outside Resources:
  * The Alpha Vantage API (obviously): Alphavantage.co
- * org.json (for parsing the JSON files): https://github.com/stleary/JSON-java
+ * org.json (for parsing the JSON files): Source: https://github.com/stleary/JSON-java Using .jar from: https://mvnrepository.com/artifact/org.json/json/20180813
  
  * Graph/Chart Library. Used for data representation, obviously.
  * If we get this far, a library for the GUI.
