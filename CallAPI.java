@@ -10,7 +10,7 @@ import org.json.*;
 
 public class CallAPI {
 
-	protected JSONObject getJSON(String inputURL) {
+	public JSONObject getJSON(String inputURL) {
 		String data = null;
 		try {
 			//converting the string into something recognized as a URL
