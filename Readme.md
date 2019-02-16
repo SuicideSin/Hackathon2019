@@ -2,15 +2,12 @@
  * 
  */
 /**
- * @author Matthew Lee
+ * @author Matthew Lee, Timothy Poehlman
  *
  */
-//Might end up writing this in Ruby
 
 
-//TODO: Add JavaDocs documentation to written functions, on top of working on the functions themselves
 
-/*
  * UX
  * Ideally, there will be a radio button for the time series
  * (or whether a time series or something else is being requested) and if, for example, a time series is selected, the UI will show a radio button menu that shows the possible
@@ -21,20 +18,21 @@
  * Upon hitting enter, GenerateAPICall.generateCall() is called with the variables as arguments. There will be null variables, which is fine.
  * 
  * Retrieving the JSON data
- * The call will then be generated and passed to WebCaller.getJSON(), which will attempt to access the Alpha Vantage API and retrieve the JSON
- * (or the .csv, and the function will be renamed, if this can be done more simply or efficiently with .csv files) file/
- * 
+ * The call will then be generated and passed to WebCaller.getJSON(), which will attempt to access the Alpha Vantage API and retrieve the JSON file.
+ 
  * Using the Data
- * Then, an as-yet-unnamed function will take that data and either display it in the UI for the user or manipulate it/pass it to a neural network/data analysis function
- * /graphical representation function/etc. 
- * 
- * Potentially, there will be some sort of output option as well, like exporting a chart as a .jpg or .pdf, or creating a text file with stock estimates or something like that.
- * 
+ * Then, an as-yet-unnamed function will take that data and either display it in the UI for the user or manipulate it/pass it to a neural network/data analysis function/graphical representation function/etc. 
+ 
+ 
+ * Potentially, there can be some sort of output option as well, like exporting a chart as a .jpg or .pdf, or creating a text file with stock estimates or something like that.
+ 
+ 
  * Outside Resources:
  * The Alpha Vantage API (obviously)
- * Probably an open-source JSON reader. I might write one myself, though; a simple non-efficient one doesn't seem that hard to write.
+ * Probably an open-source JSON reading library. Could write one in-house, but the time is likely better spent elsewhere.
+ 
  * Graph/Chart Library. Used for data representation, obviously.
- * Scenebuilder, probably. I'm not going to create some ugly-ass UI myself; I want this to be worthy of the immortal words of Angry Joe: "THAT LOOK GOOOOOOOD!"
+ * If we get this far, a library for the GUI.
  */
 
 
