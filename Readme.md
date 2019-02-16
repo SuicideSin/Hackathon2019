@@ -28,8 +28,8 @@
  
  
  * Outside Resources:
- * The Alpha Vantage API (obviously)
- * Probably an open-source JSON reading library. Could write one in-house, but the time is likely better spent elsewhere.
+ * The Alpha Vantage API (obviously): Alphavantage.co
+ * org.json (for parsing the JSON files): https://github.com/stleary/JSON-java
  
  * Graph/Chart Library. Used for data representation, obviously.
  * If we get this far, a library for the GUI.
