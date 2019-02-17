@@ -8,6 +8,4 @@ The user interface is console-only for the time being.
  Outside Resources:
 
  [The Alpha Vantage API](Alphavantage.co)
-
- [org.json library](https://github.com/stleary/JSON-java) (for parsing the JSON data) 
  [Gson](https://github.com/google/gson) (for handling the JSON data) 
