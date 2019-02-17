@@ -15,9 +15,17 @@ import org.json.*;
 //
 public class AnalyzeValues{
 	
-	static double estimateTomorrowClosing(JSONObject input) {
+	static double estimateTomorrowClosing(JSONObject input, int time) {
 		double difference = 0;
-		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
+		String timePeriod;
+		if(time == 0) {
+			timePeriod = "Time Series (Daily)";
+		} else if (time == 1) {
+			timePeriod = "Weekly Time Series";
+		} else {
+			timePeriod = "Monthly Time Series";
+		}
+		JSONObject dailySeries = input.getJSONObject(timePeriod);
 		JSONArray arrayVersion = dailySeries.names();
 		JSONObject today = dailySeries.getJSONObject(arrayVersion.getString(0));
 		double todayNum = Double.valueOf(today.getString("4. close"));
@@ -33,28 +41,21 @@ public class AnalyzeValues{
 		return (todayNum + difference);
 	}
 	
-	static double estimateWeekClosing(JSONObject input) {
-		double difference = 0;
-		JSONObject weeklySeries = input.getJSONObject("Time Series (Weekly)");
-		JSONArray arrayVersion = weeklySeries.names();
-		JSONObject thisWeek = weeklySeries.getJSONObject(arrayVersion.getString(0));
-		double thisWeekNum = Double.valueOf(thisWeek.getString("4. close"));
+	
+	
+	static String currentStats(JSONObject input) {
+		//getting today's opening and closing values - same as the first part of the estimateTomorrowClosing() function
+		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
+		JSONArray arrayVersion = dailySeries.names();
+		JSONObject today = dailySeries.getJSONObject(arrayVersion.getString(0));
 		
-		for(int i = 0; i < 7; i++){
-			JSONObject week = weeklySeries.getJSONObject(arrayVersion.getString(i));
-			JSONObject weekBefore = weeklySeries.getJSONObject(arrayVersion.getString(i+1));
-			double weekNum = Double.valueOf(week.getString("4. close"));
-			double afterNum = Double.valueOf(weekBefore.getString("4. close"));
-			difference += (weekNum - afterNum);
-		}
-		//returning thisWeek's closing value added to the average difference in closing over the past week
-		return (thisWeekNum + difference);
+		String open = today.getString("1. open");
+		String close = today.getString("4. close");
+		String high = today.getString("2. high");
+		String low = today.getString("3. low");
+		
+		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
 	}
-	
-	
-	
-	
-	
 	
 }
 
