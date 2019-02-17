@@ -87,9 +87,10 @@ public class AnalyzeValues{
 	
 	
 	static String foreignExchange(JSONObject input) {
-		String from = input.getString("2. From_Currency Name");
-		String to = input.getString("4. To_Currency Name");
-		String value = input.getString("5. Exchange Rate");
+		JSONObject currentExchange = input.getJSONObject("Realtime Currency Exchange Rate");
+		String from = currentExchange.getString("2. From_Currency Name");
+		String to = currentExchange.getString("4. To_Currency Name");
+		String value = currentExchange.getString("5. Exchange Rate");
 		
 		return "A single " + from + " is equal to " + value + " " + to;
 	}
@@ -97,6 +98,7 @@ public class AnalyzeValues{
 	
 	static void generateGraph(JSONObject input) {
 		int[] values = new int[365];
+		int[] indices = new int[365];
 		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
 		JSONArray arrayVersion = dailySeries.names();
 		for(int i = 0; i < 365; i++){
@@ -106,6 +108,12 @@ public class AnalyzeValues{
 			dayNum*=100;
 			values[i] = (int) dayNum;
 		}
+		for(int i = 0; i<365; i++) {
+			indices[i] = i;
+		}
+		
+		
+		
 	}
 }
 
