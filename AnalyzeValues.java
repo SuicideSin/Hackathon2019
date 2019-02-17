@@ -30,15 +30,15 @@ public class AnalyzeValues{
 		JsonObject today = dailySeries.getAsJsonObject(keysArray[0]);
 		//alternatively, simply retrieve this as a double. today.get("4. close").getAsDouble();
 		//I'm not sure if this .get(int).toString() business works, but I think it should, as Eclipse tends to warn me if something is out of place.
-		double todayNum = Double.valueOf(today.get("4. close").toString());
+		double todayNum = Double.valueOf(today.get("4. close").toString().replaceAll("^\"|\"$", ""));
 		
 		
 		if(time == 0) {
 			for(int i = 0; i < 7; i++){
 				JsonObject day = dailySeries.getAsJsonObject(keysArray[i]);
 				JsonObject dayBefore = dailySeries.getAsJsonObject(keysArray[i+1]);
-				double dayNum = Double.valueOf(day.get("4. close").toString());
-				double afterNum = Double.valueOf(dayBefore.get("4. close").toString());
+				double dayNum = Double.valueOf(day.get("4. close").toString().replaceAll("^\"|\"$", ""));
+				double afterNum = Double.valueOf(dayBefore.get("4. close").toString().replaceAll("^\"|\"$", ""));
 				difference += (dayNum - afterNum);
 			}
 			difference /=7;
@@ -46,8 +46,8 @@ public class AnalyzeValues{
 			for(int i = 0; i < 12; i++){
 				JsonObject day = dailySeries.getAsJsonObject(keysArray[i]);
 				JsonObject dayBefore = dailySeries.getAsJsonObject(keysArray[i+1]);
-				double dayNum = Double.valueOf(day.get("4. close").toString());
-				double afterNum = Double.valueOf(dayBefore.get("4. close").toString());
+				double dayNum = Double.valueOf(day.get("4. close").toString().replaceAll("^\"|\"$", ""));
+				double afterNum = Double.valueOf(dayBefore.get("4. close").toString().replaceAll("^\"|\"$", ""));
 				difference += (dayNum - afterNum);
 			}
 			difference /=12;
@@ -55,8 +55,8 @@ public class AnalyzeValues{
 			for(int i = 0; i < 4; i++){
 				JsonObject day = dailySeries.getAsJsonObject(keysArray[i]);
 				JsonObject dayBefore = dailySeries.getAsJsonObject(keysArray[i+1]);
-				double dayNum = Double.valueOf(day.get("4. close").toString());
-				double afterNum = Double.valueOf(dayBefore.get("4. close").toString());
+				double dayNum = Double.valueOf(day.get("4. close").toString().replaceAll("^\"|\"$", ""));
+				double afterNum = Double.valueOf(dayBefore.get("4. close").toString().replaceAll("^\"|\"$", ""));
 				difference += (dayNum - afterNum);
 			}
 			difference /= 4;
@@ -75,10 +75,10 @@ public class AnalyzeValues{
 		String[] keysArray = keys.toArray(new String[keys.size()]);
 		JsonObject today = dailySeries.getAsJsonObject(keysArray[0]);
 		
-		String open = today.get("1. open").toString();
-		String close = today.get("4. close").toString();
-		String high = today.get("2. high").toString();
-		String low = today.get("3. low").toString();
+		String open = today.get("1. open").toString().replaceAll("^\"|\"$", "");
+		String close = today.get("4. close").toString().replaceAll("^\"|\"$", "");
+		String high = today.get("2. high").toString().replaceAll("^\"|\"$", "");
+		String low = today.get("3. low").toString().replaceAll("^\"|\"$", "");
 		
 		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
 	}
@@ -89,10 +89,10 @@ public class AnalyzeValues{
 		String[] keysArray = keys.toArray(new String[keys.size()]);
 		JsonObject currenttime = currentSeries.getAsJsonObject(keysArray[0]);
 		
-		String open = currenttime.get("1. open").toString();
-		String close = currenttime.get("4. close").toString();
-		String high = currenttime.get("2. high").toString();
-		String low = currenttime.get("3. low").toString();
+		String open = currenttime.get("1. open").toString().replaceAll("^\"|\"$", "");
+		String close = currenttime.get("4. close").toString().replaceAll("^\"|\"$", "");
+		String high = currenttime.get("2. high").toString().replaceAll("^\"|\"$", "");
+		String low = currenttime.get("3. low").toString().replaceAll("^\"|\"$", "");
 		
 		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
 	}
@@ -100,9 +100,9 @@ public class AnalyzeValues{
 	
 	static String foreignExchange(JsonObject input) {
 		JsonObject currentExchange = input.getAsJsonObject("Realtime Currency Exchange Rate");
-		String from = currentExchange.get("2. From_Currency Name").toString();
-		String to = currentExchange.get("4. To_Currency Name").toString();
-		String value = currentExchange.get("5. Exchange Rate").toString();
+		String from = currentExchange.get("2. From_Currency Name").toString().replaceAll("^\"|\"$", "");
+		String to = currentExchange.get("4. To_Currency Name").toString().replaceAll("^\"|\"$", "");
+		String value = currentExchange.get("5. Exchange Rate").toString().replaceAll("^\"|\"$", "");
 		
 		return "A single " + from + " is equal to " + value + " " + to;
 	}
