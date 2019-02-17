@@ -4,6 +4,13 @@ import java.util.*;
 
 // Is the front for the terminal, all user inputs are gathered here and then transferred to other classes
 
+//To compile in the terminal
+//javac -cp /home/thegasian/Public/'Imported Libraries'/gson-2.8.5.jar *.java
+//To run in the terminal
+//java -cp .:/home/thegasian/Public/'Imported Libraries'/gson-2.8.5.jar UserInput.java
+
+
+
 
 public class UserInput{
 
@@ -19,30 +26,39 @@ public class UserInput{
 	public static void main(String arg[]){
 		//ENTER GREETING HERE
 
-		System.out.println("What Symbol would you like to look at?");
+		
 
-		symbol = userInput.nextLine();
+		
 
-		System.out.println("What would you like me to do? Options include the following: \n1)Estimate Closing \n2)Find stats \n3)Exchange rates \n4)Create graph");
-
-		String action = userInput.nextLine();
-
-		findAction(action);
+		findAction();
 
 		//CallAPI.getJSON(stockURL);		
 	}
 
-	private static void findAction(String action){
+	private static void findAction(){
 		while(true){
+			System.out.println("What would you like me to do? Options include the following: \n1)Estimate Closing \n2)Find stats \n3)Exchange rates \n4)Create graph");
+
+			String action = userInput.nextLine();
+			
 			if(action.toLowerCase().equals("estimate closing") || action.equals("1")){
+				System.out.println("What Symbol would you like to look at?");
+
+				symbol = userInput.nextLine();
+				
 				estimateClosing();
 				break;
 			}
 			else if(action.toLowerCase().equals("find stats") || action.equals("2")){
+				System.out.println("What Symbol would you like to look at?");
+
+				symbol = userInput.nextLine();
+				
 				findStats();
 				break;
 			}
 			else if(action.toLowerCase().equals("exchange rates") || action.equals("3")) {
+				function = "CURRENCY_EXCHANGE_RATE";
 				exchangeRates();
 				break;
 			}
@@ -50,7 +66,7 @@ public class UserInput{
 				activateGraph();
 			}
 			else{
-				System.out.println("Please provide a valid response.");
+				System.out.println("Please provide a valid response. \n");
 			}
 		}
 	}
@@ -87,12 +103,15 @@ public class UserInput{
 	private static void findStats(){
 		while(true){
 			System.out.println("What stats would you like to find? Options include the following: \n1)Yesterday's stats \n2)Today's stats \n3)Current price");
-			
 			String chosenStat = userInput.nextLine();
 			function = "TIME_SERIES_DAILY";
 			stockURL = GenerateURL.getURL(function, symbol);
 
 			if(chosenStat.toLowerCase().equals("yesterday's stats") || chosenStat.equals("1")){
+				if(c.get(Calendar.DAY_OF_WEEK) == 1 || c.get(Calendar.DAY_OF_WEEK) == 7){
+					System.out.println("The stock market is closed today! Here is the information for Friday.");
+					
+				}
 				System.out.println(AnalyzeValues.lastTradingDayStats(CallAPI.getJSON(stockURL)));
 				break;
 			}
@@ -134,7 +153,7 @@ public class UserInput{
 			
 			stockURL = GenerateURL.getURLExchange(function, currencyFrom, currencyTo);
 			
-			// prinnts the information returned by AnalyzeValues.foreignExchange, with the information gathered from stockURL
+			// prints the information returned by AnalyzeValues.foreignExchange, with the information gathered from stockURL
 			System.out.println(AnalyzeValues.foreignExchange(CallAPI.getJSON(stockURL)));
 			break;
 		
@@ -147,6 +166,6 @@ public class UserInput{
 		function = "TIME_SERIES_DAILY";
 		stockURL = GenerateURL.getURL(function, symbol);
 		
-		AnalyzeValues.generateGraph(stockURL);
+		//AnalyzeValues.generateGraph(stockURL);
 	}
 }

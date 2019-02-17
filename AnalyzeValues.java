@@ -23,10 +23,13 @@ public class AnalyzeValues{
 		JSONObject dailySeries = input.getJSONObject(timePeriod);
 		JSONArray arrayVersion = dailySeries.names();
 		JSONObject today = dailySeries.getJSONObject(arrayVersion.getString(0));
+		for(int i = 0; i<25; i++) {
+			System.out.println(arrayVersion.getString(i));
+		}
 		double todayNum = Double.valueOf(today.getString("4. close"));
 		
 		
-		if(time == 0) {
+		/*if(time == 0) {
 			for(int i = 0; i < 7; i++){
 				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
 				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
@@ -42,7 +45,7 @@ public class AnalyzeValues{
 				double dayNum = Double.valueOf(day.getString("4. close"));
 				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
 				difference += (dayNum - afterNum);
-				System.out.println(difference);
+				
 			}
 			difference /=12;
 		} else {
@@ -54,12 +57,12 @@ public class AnalyzeValues{
 				difference += (dayNum - afterNum);
 			}
 			difference /= 4;
-		}
+		}*/
 		
 		
 		
 		//returning today's closing value added to the average difference in closing over the past week
-		return (todayNum + difference);
+		return todayNum;
 	}
 	
 	static String lastTradingDayStats(JSONObject input) {

@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class GenerateURL{
 
 	private static String function;
@@ -17,7 +15,7 @@ public class GenerateURL{
 		symbol = chosenSymbol;
 		
 		if(chosenAction.equals("TIME_SERIES_INTRADAY")) {
-			otherInputs = "1min";
+			otherInputs = "&interval=1min";
 		}
 		//commented out due to unnecessary information, if using intraday, daily, or daily adjusted uncomment
 		//determineOtherVariables();
@@ -72,11 +70,12 @@ public class GenerateURL{
 
 	private static String constructURL(){
 		if(function.equals("CURRENCY_EXCHANGE_RATE")){
-			String finalURL = "https://www.alphavantage.co/query?function=" + function + "&from_currency=" + currencyFrom + "&to_currency=" + currencyTo + "&apikey=" + apikey);
+			String finalURL = "https://www.alphavantage.co/query?function=" + function + "&from_currency=" + currencyFrom + "&to_currency=" + currencyTo + "&apikey=" + apikey;
+			return finalURL;
 		}
 		else {
 			String finalURL = "https://www.alphavantage.co/query?function=" + function + "&symbol=" + symbol + otherInputs + optionalInputs + "&apikey=" + apikey + "&datatype=json";
+			return finalURL;
 		}
-		return finalURL;
 	}
 }
