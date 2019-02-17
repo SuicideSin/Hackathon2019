@@ -7,6 +7,8 @@ public class GenerateURL{
 	private static String otherInputs = "";
 	private static String optionalInputs = "";
 	private static String apikey = "QTPNO32HQGPBBKJC";
+	private static String currencyFrom;
+	private static String currencyTo;
 
 
 	//if revieving outside input replace main(String args[]) with 'getURL(function,symbol,otherInputs,optionalInputs)'
@@ -21,6 +23,14 @@ public class GenerateURL{
 		//determineOtherVariables();
 
 		// return constructURL();  // ONLY HAVE THIS IF NO LONGER USING MAIN TO ACTIVATE
+		return constructURL();
+	}
+	
+	public static String getURLExchange(String chosenAction, String chosenFromCurr, String chosenToCurr) {
+		function = chosenAction;
+		currencyFrom = chosenFromCurr;
+		currencyTo = chosenToCurr;
+		
 		return constructURL();
 	}
 
@@ -61,7 +71,12 @@ public class GenerateURL{
 	//}
 
 	private static String constructURL(){
-		String finalURL = "https://www.alphavantage.co/query?function=" + function + "&symbol=" + symbol + otherInputs + optionalInputs + "&apikey=" + apikey + "&datatype=json";
+		if(function.equals("CURRENCY_EXCHANGE_RATE")){
+			String finalURL = "https://www.alphavantage.co/query?function=" + function + "&from_currency=" + currencyFrom + "&to_currency=" + currencyTo + "&apikey=" + apikey);
+		}
+		else {
+			String finalURL = "https://www.alphavantage.co/query?function=" + function + "&symbol=" + symbol + otherInputs + optionalInputs + "&apikey=" + apikey + "&datatype=json";
+		}
 		return finalURL;
 	}
 }

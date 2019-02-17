@@ -12,6 +12,8 @@ public class UserInput{
 	private static String stockURL;
 	private static Scanner userInput = new Scanner(System.in);
 	private static Calendar c = Calendar.getInstance();
+	private static String currencyFrom;
+	private static String currencyTo;
 
 
 	public static void main(String arg[]){
@@ -21,7 +23,7 @@ public class UserInput{
 
 		symbol = userInput.nextLine();
 
-		System.out.println("What would you like me to do? Options include the following: \n1)Estimate Closing \n2)Find stats \n...");
+		System.out.println("What would you like me to do? Options include the following: \n1)Estimate Closing \n2)Find stats \n3)Exchange rates \n4)Create graph");
 
 		String action = userInput.nextLine();
 
@@ -40,10 +42,13 @@ public class UserInput{
 				findStats();
 				break;
 			}
-			else if(action.toLowerCase().equals("make graph") || action.equals("3")) {
-				
+			else if(action.toLowerCase().equals("exchange rates") || action.equals("3")) {
+				exchangeRates();
+				break;
 			}
-			
+			else if(action.toLowerCase().equals("create graph") || action.equals("4")){
+				activateGraph();
+			}
 			else{
 				System.out.println("Please provide a valid response.");
 			}
@@ -115,5 +120,33 @@ public class UserInput{
 		}
 	}
 
+	
+	// Requests input for the two currencies to find the exchange rate to
+	private static void exchangeRates() 
+	{
+		while(true) 
+		{
+			System.out.println("Please provide the currency you wish to exchange from");
+			currencyFrom = userInput.nextLine();
+			
+			System.out.println("Please provide the currency you wish to exchange to");
+			currencyTo = userInput.nextLine();
+			
+			stockURL = GenerateURL.getURLExchange(function, currencyFrom, currencyTo);
+			
+			// prinnts the information returned by AnalyzeValues.foreignExchange, with the information gathered from stockURL
+			System.out.println(AnalyzeValues.foreignExchange(CallAPI.getJSON(stockURL)));
+			break;
+		
+		}
+	}
 
+	// activates the graph activator with the information from stockURL
+	private static void activateGraph() 
+	{
+		function = "TIME_SERIES_DAILY";
+		stockURL = GenerateURL.getURL(function, symbol);
+		
+		AnalyzeValues.generateGraph(stockURL);
+	}
 }

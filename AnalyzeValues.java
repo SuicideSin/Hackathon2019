@@ -2,6 +2,11 @@
 //In collaboration with Timothy Poehlman for WWU CS Hackathon 2019
 //TODO: Add Documentation
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Scanner;
 import org.json.*;
 
 //Today's High
@@ -25,27 +30,13 @@ public class AnalyzeValues{
 		JSONObject today = dailySeries.getJSONObject(arrayVersion.getString(0));
 		double todayNum = Double.valueOf(today.getString("4. close"));
 		
-		
-		if(time == 1) {
-			for(int i = 0; i < 7; i++){
-				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
-				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
-				double dayNum = Double.valueOf(day.getString("4. close"));
-				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
-				difference += (dayNum - afterNum);
-			}
-		} else {
-			for(int i = 0; i < dailySeries.length(); i++){
-				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
-				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
-				double dayNum = Double.valueOf(day.getString("4. close"));
-				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
-				difference += (dayNum - afterNum);
-			}
+		for(int i = 0; i < 7; i++){
+			JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
+			JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
+			double dayNum = Double.valueOf(day.getString("4. close"));
+			double afterNum = Double.valueOf(dayBefore.getString("4. close"));
+			difference += (dayNum - afterNum);
 		}
-		
-		
-		
 		//returning today's closing value added to the average difference in closing over the past week
 		return (todayNum + difference);
 	}
@@ -65,7 +56,7 @@ public class AnalyzeValues{
 	}
 	
 	static String intradayStats(JSONObject input) {
-		JSONObject currentSeries = input.getJSONObject("Time Series (1min)");
+		JSONObject currentSeries = input.getJSONObject("Time Series (5min)");
 		JSONArray arrayVersion = currentSeries.names();
 		JSONObject currenttime = currentSeries.getJSONObject(arrayVersion.getString(0));
 		
@@ -80,6 +71,3 @@ public class AnalyzeValues{
 	
 	
 }
-
-
-
