@@ -26,7 +26,7 @@ public class AnalyzeValues{
 		//from what I understand, due to the way the keySet() function is constructed, using the map interface, the resulting set preserves the order of entry, and it preserves it when
 		//converting to another ordered data structure as well.
 		Set<String> keys =  dailySeries.keySet();
-		String[] keysArray = (String[]) keys.toArray();
+		String[] keysArray = keys.toArray(new String[keys.size()]);
 		JsonObject today = dailySeries.getAsJsonObject(keysArray[0]);
 		//alternatively, simply retrieve this as a double. today.get("4. close").getAsDouble();
 		//I'm not sure if this .get(int).toString() business works, but I think it should, as Eclipse tends to warn me if something is out of place.
@@ -72,7 +72,7 @@ public class AnalyzeValues{
 		//getting today's opening and closing values - same as the first part of the estimateTomorrowClosing() function
 		JsonObject dailySeries = input.getAsJsonObject("Time Series (Daily)");
 		Set<String> keys =  dailySeries.keySet();
-		String[] keysArray = (String[]) keys.toArray();
+		String[] keysArray = keys.toArray(new String[keys.size()]);
 		JsonObject today = dailySeries.getAsJsonObject(keysArray[0]);
 		
 		String open = today.get("1. open").toString();
@@ -85,8 +85,9 @@ public class AnalyzeValues{
 	
 	static String intradayStats(JsonObject input) {
 		JsonObject currentSeries = input.getAsJsonObject("Time Series (1min)");
-		JsonArray arrayVersion = currentSeries.getAsJsonArray();
-		JsonObject currenttime = currentSeries.getAsJsonObject(arrayVersion.get(0).toString());
+		Set<String> keys =  currentSeries.keySet();
+		String[] keysArray = keys.toArray(new String[keys.size()]);
+		JsonObject currenttime = currentSeries.getAsJsonObject(keysArray[0]);
 		
 		String open = currenttime.get("1. open").toString();
 		String close = currenttime.get("4. close").toString();
