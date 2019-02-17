@@ -14,6 +14,9 @@ public class GenerateURL{
 		function = chosenAction;
 		symbol = chosenSymbol;
 		
+		if(chosenAction.equals("TIME_SERIES_INTRADAY")) {
+			otherInputs = "1min";
+		}
 		//commented out due to unnecessary information, if using intraday, daily, or daily adjusted uncomment
 		//determineOtherVariables();
 

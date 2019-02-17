@@ -27,10 +27,6 @@ public class UserInput{
 
 		findAction(action);
 
-		//gets the URL for all information
-
-		System.out.println(stockURL);
-
 		//CallAPI.getJSON(stockURL);		
 	}
 
@@ -44,6 +40,10 @@ public class UserInput{
 				findStats();
 				break;
 			}
+			else if(action.toLowerCase().equals("make graph") || action.equals("3")) {
+				
+			}
+			
 			else{
 				System.out.println("Please provide a valid response.");
 			}
@@ -81,39 +81,33 @@ public class UserInput{
 
 	private static void findStats(){
 		while(true){
-			System.out.println("What stats would you like to find? Options include the following: \n1)Last open \n2)Last close \n3)Today's open \n4)Today's close");
+			System.out.println("What stats would you like to find? Options include the following: \n1)Yesterday's stats \n2)Today's stats \n3)Current price");
 			
 			String chosenStat = userInput.nextLine();
+			function = "TIME_SERIES_DAILY";
+			stockURL = GenerateURL.getURL(function, symbol);
 
-			if(chosenStat.toLowerCase().equals("last open") || chosenStat.equals("1")){
-				function = "TIME_SERIES_DAILY";
-
+			if(chosenStat.toLowerCase().equals("yesterday's stats") || chosenStat.equals("1")){
+				System.out.println(AnalyzeValues.lastTradingDayStats(CallAPI.getJSON(stockURL)));
 				break;
 			}
-			else if(chosenStat.toLowerCase().equals("last close") || chosenStat.equals("2")){
-				function = "TIME_SERIES_DAILY";
-
+			else if(chosenStat.toLowerCase().equals("today's stats") || chosenStat.toLowerCase().equals("todays open") || chosenStat.equals("2")){
+				if(c.get(Calendar.DAY_OF_WEEK) == 1 || c.get(Calendar.DAY_OF_WEEK) == 7){
+					System.out.println("The stock market is closed today! Here is the information for Friday.");
+					
+				}
+				System.out.println(AnalyzeValues.lastTradingDayStats(CallAPI.getJSON(stockURL)));
 				break;
 			}
-			else if(chosenStat.toLowerCase().equals("today's open") || chosenStat.toLowerCase().equals("todays open") || chosenStat.equals("3")){
-				function = "TIME_SERIES_DAILY";
+			else if(chosenStat.toLowerCase().equals("current price") || chosenStat.equals("3")) {
 				if(c.get(Calendar.DAY_OF_WEEK) == 1 || c.get(Calendar.DAY_OF_WEEK) == 7){
-					System.out.println("The stock market is closed today! Here is the information for Friday's open.");
-					break;
+					System.out.println("The stock market is closed today! Here is the information for Friday.");
+					
 				}
-				else{
-					break;
-				}
-			}
-			else if(chosenStat.toLowerCase().equals("today's close") || chosenStat.toLowerCase().equals("todays close") || chosenStat.equals("4")){
-				function = "TIME_SERIES_DAILY";
-				if(c.get(Calendar.DAY_OF_WEEK) == 1 || c.get(Calendar.DAY_OF_WEEK) == 7){
-					System.out.println("The stock market is closed today! Here is the information for Friday's close.");
-					break;
-				}
-				else{
-					break;
-				}
+				function = "TIME_SERIES_INTRADAY";
+				stockURL = GenerateURL.getURL(function, symbol);
+				System.out.println(AnalyzeValues.intradayStats(CallAPI.getJSON(stockURL)));
+				break;
 			}
 			else{
 				System.out.println("Please provide a valid response.");
