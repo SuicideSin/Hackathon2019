@@ -2,7 +2,7 @@
 //In collaboration with Timothy Poehlman and Griffin Nicolino for WWU CS Hackathon 2019
 //TODO: Add Documentation
 
-import org.json.*;
+import com.google.gson.*;
 
 //Today's High
 //Today's low
@@ -10,7 +10,7 @@ import org.json.*;
 //
 public class AnalyzeValues{
 	
-	static double estimateTomorrowClosing(JSONObject input, int time) {
+	static double estimateTomorrowClosing(JsonObject input, int time) {
 		double difference = 0;
 		String timePeriod;
 		if(time == 0) {
@@ -20,97 +20,95 @@ public class AnalyzeValues{
 		} else {
 			timePeriod = "Monthly Time Series";
 		}
-		JSONObject dailySeries = input.getJSONObject(timePeriod);
-		JSONArray arrayVersion = dailySeries.names();
-		JSONObject today = dailySeries.getJSONObject(arrayVersion.getString(0));
-		for(int i = 0; i<25; i++) {
-			System.out.println(arrayVersion.getString(i));
-		}
-		double todayNum = Double.valueOf(today.getString("4. close"));
+		JsonObject dailySeries = input.getAsJsonObject(timePeriod);
+		JsonArray arrayVersion = dailySeries.getAsJsonArray();
+		JsonObject today = arrayVersion.get(0).getAsJsonObject();
+		//alternatively, simply retrieve this as a double. today.get("4. close").getAsDouble();
+		//I'm not sure if this .get(int).toString() business works, but I think it should, as Eclipse tends to warn me if something is out of place.
+		double todayNum = Double.valueOf(today.get("4. close").toString());
 		
 		
-		/*if(time == 0) {
+		if(time == 0) {
 			for(int i = 0; i < 7; i++){
-				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
-				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
-				double dayNum = Double.valueOf(day.getString("4. close"));
-				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
+				JsonObject day = dailySeries.getAsJsonObject(arrayVersion.get(i).toString());
+				JsonObject dayBefore = dailySeries.getAsJsonObject(arrayVersion.get(i+1).toString());
+				double dayNum = Double.valueOf(day.get("4. close").toString());
+				double afterNum = Double.valueOf(dayBefore.get("4. close").toString());
 				difference += (dayNum - afterNum);
 			}
 			difference /=7;
 		} else if(time == 2){
 			for(int i = 0; i < 12; i++){
-				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
-				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
-				double dayNum = Double.valueOf(day.getString("4. close"));
-				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
+				JsonObject day = dailySeries.getAsJsonObject(arrayVersion.get(i).toString());
+				JsonObject dayBefore = dailySeries.getAsJsonObject(arrayVersion.get(i+1).toString());
+				double dayNum = Double.valueOf(day.get("4. close").toString());
+				double afterNum = Double.valueOf(dayBefore.get("4. close").toString());
 				difference += (dayNum - afterNum);
-				
 			}
 			difference /=12;
 		} else {
 			for(int i = 0; i < 4; i++){
-				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
-				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
-				double dayNum = Double.valueOf(day.getString("4. close"));
-				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
+				JsonObject day = dailySeries.getAsJsonObject(arrayVersion.get(i).toString());
+				JsonObject dayBefore = dailySeries.getAsJsonObject(arrayVersion.get(i+1).toString());
+				double dayNum = Double.valueOf(day.get("4. close").toString());
+				double afterNum = Double.valueOf(dayBefore.get("4. close").toString());
 				difference += (dayNum - afterNum);
 			}
 			difference /= 4;
-		}*/
+		}
 		
 		
 		
 		//returning today's closing value added to the average difference in closing over the past week
-		return todayNum;
+		return (todayNum + difference);
 	}
 	
-	static String lastTradingDayStats(JSONObject input) {
+	static String lastTradingDayStats(JsonObject input) {
 		//getting today's opening and closing values - same as the first part of the estimateTomorrowClosing() function
-		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
-		JSONArray arrayVersion = dailySeries.names();
-		JSONObject today = dailySeries.getJSONObject(arrayVersion.getString(0));
+		JsonObject dailySeries = input.getAsJsonObject("Time Series (Daily)");
+		JsonArray arrayVersion = dailySeries.getAsJsonArray();
+		JsonObject today = dailySeries.getAsJsonObject(arrayVersion.get(0).toString());
 		
-		String open = today.getString("1. open");
-		String close = today.getString("4. close");
-		String high = today.getString("2. high");
-		String low = today.getString("3. low");
-		
-		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
-	}
-	
-	static String intradayStats(JSONObject input) {
-		JSONObject currentSeries = input.getJSONObject("Time Series (1min)");
-		JSONArray arrayVersion = currentSeries.names();
-		JSONObject currenttime = currentSeries.getJSONObject(arrayVersion.getString(0));
-		
-		String open = currenttime.getString("1. open");
-		String close = currenttime.getString("4. close");
-		String high = currenttime.getString("2. high");
-		String low = currenttime.getString("3. low");
+		String open = today.get("1. open").toString();
+		String close = today.get("4. close").toString();
+		String high = today.get("2. high").toString();
+		String low = today.get("3. low").toString();
 		
 		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
 	}
 	
+	static String intradayStats(JsonObject input) {
+		JsonObject currentSeries = input.getAsJsonObject("Time Series (1min)");
+		JsonArray arrayVersion = currentSeries.getAsJsonArray();
+		JsonObject currenttime = currentSeries.getAsJsonObject(arrayVersion.get(0).toString());
+		
+		String open = currenttime.get("1. open").toString();
+		String close = currenttime.get("4. close").toString();
+		String high = currenttime.get("2. high").toString();
+		String low = currenttime.get("3. low").toString();
+		
+		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
+	}
 	
-	static String foreignExchange(JSONObject input) {
-		JSONObject currentExchange = input.getJSONObject("Realtime Currency Exchange Rate");
-		String from = currentExchange.getString("2. From_Currency Name");
-		String to = currentExchange.getString("4. To_Currency Name");
-		String value = currentExchange.getString("5. Exchange Rate");
+	
+	static String foreignExchange(JsonObject input) {
+		JsonObject currentExchange = input.getAsJsonObject("Realtime Currency Exchange Rate");
+		String from = currentExchange.get("2. From_Currency Name").toString();
+		String to = currentExchange.get("4. To_Currency Name").toString();
+		String value = currentExchange.get("5. Exchange Rate").toString();
 		
 		return "A single " + from + " is equal to " + value + " " + to;
 	}
 	
 	
-	static void generateGraph(JSONObject input) {
+	static void generateGraph(JsonObject input) {
 		int[] values = new int[365];
 		int[] indices = new int[365];
-		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
-		JSONArray arrayVersion = dailySeries.names();
+		JsonObject dailySeries = input.getAsJsonObject("Time Series (Daily)");
+		JsonArray arrayVersion = dailySeries.getAsJsonArray();
 		for(int i = 0; i < 365; i++){
-			JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
-			double dayNum = Double.valueOf(day.getString("4. close"));
+			JsonObject day = dailySeries.getAsJsonObject(arrayVersion.get(i).toString());
+			double dayNum = Double.valueOf(day.get("4. close").toString());
 			//the graph library being used can't handle 
 			dayNum*=100;
 			values[i] = (int) dayNum;
