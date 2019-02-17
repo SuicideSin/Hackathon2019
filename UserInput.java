@@ -28,7 +28,6 @@ public class UserInput{
 		findAction(action);
 
 		//gets the URL for all information
-		stockURL = GenerateURL.getURL(function, symbol);
 
 		System.out.println(stockURL);
 
@@ -58,14 +57,20 @@ public class UserInput{
 			String period = userInput.nextLine();
 			if(period.toLowerCase().equals("past week") || period.equals("1")){
 				function = "TIME_SERIES_DAILY";
+				stockURL = GenerateURL.getURL(function, symbol);
+				System.out.println(AnalyzeValues.estimateTomorrowClosing(CallAPI.getJSON(stockURL),0));
 				break;
 			}
 			else if(period.toLowerCase().equals("past month") || period.equals("2")){
 				function = "TIME_SERIES_WEEKLY";
+				stockURL = GenerateURL.getURL(function, symbol);
+				System.out.println(AnalyzeValues.estimateTomorrowClosing(CallAPI.getJSON(stockURL),1));
 				break;
 			}
 			else if(period.toLowerCase().equals("past year") || period.equals("3")){
 				function = "TIME_SERIES_MONTHLY";
+				stockURL = GenerateURL.getURL(function, symbol);
+				System.out.println(AnalyzeValues.estimateTomorrowClosing(CallAPI.getJSON(stockURL),2));
 				break;
 			}
 			else{

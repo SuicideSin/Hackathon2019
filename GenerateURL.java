@@ -11,7 +11,6 @@ public class GenerateURL{
 
 	//if revieving outside input replace main(String args[]) with 'getURL(function,symbol,otherInputs,optionalInputs)'
 	public static String getURL(String chosenAction, String chosenSymbol){
-
 		function = chosenAction;
 		symbol = chosenSymbol;
 		
