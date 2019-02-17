@@ -4,7 +4,8 @@ public class GenerateURL{
 	private static String symbol;
 	private static String otherInputs = "";
 	private static String optionalInputs = "";
-	private static String apikey = "QTPNO32HQGPBBKJC";
+	//redacted, place API key here for it to function
+	private static String apikey = "XXXXXXXXXXXXXXXXX";
 	private static String currencyFrom;
 	private static String currencyTo;
 
