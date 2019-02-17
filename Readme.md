@@ -11,6 +11,7 @@ This project was born as a personal project of my (Matthew's) own which existed 
 The user interface is console-only for the time being.
 
  Outside Resources:
+ 
  [The Alpha Vantage API](Alphavantage.co)
  
  [org.json library](https://github.com/stleary/JSON-java) (for parsing the JSON files) 
