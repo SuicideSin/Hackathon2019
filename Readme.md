@@ -14,4 +14,4 @@ The user interface is console-only for the time being.
  
  [The Alpha Vantage API](Alphavantage.co)
  
- [org.json library](https://github.com/stleary/JSON-java) (for parsing the JSON files) 
+ [org.json library](https://github.com/stleary/JSON-java) (for parsing the JSON data) 
