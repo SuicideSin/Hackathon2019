@@ -32,7 +32,7 @@ public class AnalyzeValues{
 				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
 				double dayNum = Double.valueOf(day.getString("4. close"));
 				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
-				difference += Math.abs(dayNum - afterNum);
+				difference += (dayNum - afterNum);
 			}
 			difference /=7;
 		} else if(time == 2){
@@ -41,7 +41,8 @@ public class AnalyzeValues{
 				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
 				double dayNum = Double.valueOf(day.getString("4. close"));
 				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
-				difference += Math.abs(dayNum - afterNum);
+				difference += (dayNum - afterNum);
+				System.out.println(difference);
 			}
 			difference /=12;
 		} else {
@@ -50,7 +51,7 @@ public class AnalyzeValues{
 				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
 				double dayNum = Double.valueOf(day.getString("4. close"));
 				double afterNum = Double.valueOf(dayBefore.getString("4. close"));
-				difference += Math.abs(dayNum - afterNum);
+				difference += (dayNum - afterNum);
 			}
 			difference /= 4;
 		}
