@@ -26,7 +26,7 @@ public class AnalyzeValues{
 		double todayNum = Double.valueOf(today.getString("4. close"));
 		
 		
-		if(time == 1) {
+		if(time == 0) {
 			for(int i = 0; i < 7; i++){
 				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
 				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
@@ -43,7 +43,7 @@ public class AnalyzeValues{
 				difference += (dayNum - afterNum);
 			}
 		} else {
-			for(int i = 0; i < dailySeries.length(); i++){
+			for(int i = 0; i < 4; i++){
 				JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
 				JSONObject dayBefore = dailySeries.getJSONObject(arrayVersion.getString(i+1));
 				double dayNum = Double.valueOf(day.getString("4. close"));
@@ -95,7 +95,18 @@ public class AnalyzeValues{
 	}
 	
 	
-	
+	static void generateGraph(JSONObject input) {
+		int[] values = new int[365];
+		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
+		JSONArray arrayVersion = dailySeries.names();
+		for(int i = 0; i < 365; i++){
+			JSONObject day = dailySeries.getJSONObject(arrayVersion.getString(i));
+			double dayNum = Double.valueOf(day.getString("4. close"));
+			//the graph library being used can't handle 
+			dayNum*=100;
+			values[i] = (int) dayNum;
+		}
+	}
 }
 
 
