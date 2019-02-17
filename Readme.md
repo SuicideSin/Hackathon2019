@@ -1,14 +1,43 @@
-# Stock Utility
-## 2019 WWU CS Hackathon Project
-###### Authors: Matthew Lee and Timothy Poehlman
-This project was born as a personal project of my (Matthew's) own which existed largely in the realm of fantasy before this event. As per the rules of the event this project was written for, the (very) small amount of code from the old version that did exist was not copied over.
+/**
+ * 
+ */
+/**
+ * @author Matthew Lee, Timothy Poehlman
+ *
+ */
+
+
+
+ * UX
+ * Ideally, there will be a radio button for the time series
+ * (or whether a time series or something else is being requested) and if, for example, a time series is selected, the UI will show a radio button menu that shows the possible
+ * time series, then upon selecting one of those, the function variable = that time series, and another menu is revealed that shows the various options (text box for stock symbol,
+ * radio buttons for interval, outputsize and datatype where applicable).
+ * 
+ * Generating the API Call
+ * Upon hitting enter, GenerateAPICall.generateCall() is called with the variables as arguments. There will be null variables, which is fine.
+ * 
+ * Retrieving the JSON data
+ * The call will then be generated and passed to WebCaller.getJSON(), which will attempt to access the Alpha Vantage API and retrieve the JSON file.
  
- The main purpose of this program is to provide relevant stock market data (obtained through the Alpha Vantage API) and display it to the user. Additional functions include a crude prediction function that uses previous data over the past week, month, or year (measured in closing data for each day, week, or month depending on the span of time to gather data over) to guess what the price of a given stock will be at closing time on the next trading day.
-The user interface is console-only for the time being.
-
-
- Outside Resources:
-
- [The Alpha Vantage API](Alphavantage.co)
+ * Using the Data
+ * Then, an as-yet-unnamed function will take that data and either display it in the UI for the user or manipulate it/pass it to a neural network/data analysis function/graphical representation function/etc. 
  
- [Gson](https://github.com/google/gson) (for handling the JSON data) 
+ 
+ * Potentially, there can be some sort of output option as well, like exporting a chart as a .jpg or .pdf, or creating a text file with stock estimates or something like that.
+ 
+ 
+ * Outside Resources:
+ * The Alpha Vantage API (obviously): Alphavantage.co
+ * org.json (for parsing the JSON files): Source: https://github.com/stleary/JSON-java Using .jar from: https://mvnrepository.com/artifact/org.json/json/20180813
+ 
+ * Graph/Chart Library. Used for data representation, obviously.
+ * If we get this far, a library for the GUI.
+ */
+
+
+
+//Currently writing WebCaller, a class that retrieves JSON data from the Alpha Vantage API.
+
+//Need to write some sort of generator (probably with some sort of UI in the future) that
+//then takes the data request, makes an appropriate URL, and then passes that URL to WebCaller.
