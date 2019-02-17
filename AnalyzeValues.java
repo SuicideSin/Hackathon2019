@@ -41,9 +41,7 @@ public class AnalyzeValues{
 		return (todayNum + difference);
 	}
 	
-	
-	
-	static String currentStats(JSONObject input) {
+	static String lastTradingDayStats(JSONObject input) {
 		//getting today's opening and closing values - same as the first part of the estimateTomorrowClosing() function
 		JSONObject dailySeries = input.getJSONObject("Time Series (Daily)");
 		JSONArray arrayVersion = dailySeries.names();
@@ -57,7 +55,19 @@ public class AnalyzeValues{
 		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
 	}
 	
+	static String intradayStats(JSONObject input) {
+		JSONObject currentSeries = input.getJSONObject("Time Series (5min)");
+		JSONArray arrayVersion = currentSeries.names();
+		JSONObject currenttime = currentSeries.getJSONObject(arrayVersion.getString(0));
+		
+		String open = currenttime.getString("1. open");
+		String close = currenttime.getString("4. close");
+		String high = currenttime.getString("2. high");
+		String low = currenttime.getString("3. low");
+		
+		return "Opening Price: " + open + " Closing Price: " + close + " High: " + high + " Low: " + low;
+	}
+	
+	
+	
 }
-
-
-
