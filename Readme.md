@@ -9,6 +9,6 @@ The user interface is console-only for the time being.
 
  Outside Resources:
 
- [The Alpha Vantage API](Alphavantage.co)
+ [The Alpha Vantage API](https://Alphavantage.co)
 
  [Gson](https://github.com/google/gson) (for handling the JSON data) 
